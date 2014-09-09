@@ -1,0 +1,43 @@
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="modal-title">
+    <div class="modal-dialog <%=sizeClass%>">
+        <div class="modal-content">
+
+            <!-- Modal Header: -->
+            <div class="modal-header">
+                <% if(model.get('dismissable')){ %>
+                <button type="button" class="close modal-close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                </button>
+                <% } %>
+                <h4 class="modal-title" id="modal-title"><%=model.get('title')%></h4>
+            </div>
+
+            <!-- Modal Body: -->
+            <div class="modal-body">
+                <%=model.get('body')%>
+            </div>
+
+            <!-- Modal Footer: -->
+            <% if(model.get('hasFooter')){ %>
+            <div class="modal-footer">
+                <% if(model.get('hasCloseButton')){ %>
+                <button type="button" class="btn btn-default modal-close" data-dismiss="modal">
+                    <%=model.get('closeButtonText')%>
+                </button>
+                <% } %>
+                <% _.each(model.get('footerButtons'), function(button, index){ %>
+                    <% if(button.buttonClass){ %>
+                        <button class="btn <%=button.buttonClass%> ok-button" id="modal-btn-<%=index%>">
+                            <%=button.text%>
+                        </button>
+                    <% }else{ %>
+                        <button class="btn btn-default ok-button" id="modal-btn-<%=index%>">
+                            <%=button.text%>
+                        </button>
+                    <% } %>
+                <% });%>
+            </div>
+            <% } %>
+        </div>
+    </div>
+</div>

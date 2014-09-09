@@ -1,0 +1,18 @@
+<div class="kb-container kb-octaves<%=settings.octaves%>">
+    <% _.each(octaveList, function(oct) { %>
+        <div class="kb-octave" data-octave="<%=oct%>">
+            <div class="kb-key kb-key-white kb-key-note-c" data-octave="<%=oct%>" data-note="c"></div>
+            <div class="kb-key kb-key-black kb-key-note-cs" data-octave="<%=oct%>" data-note="cs"></div>
+            <div class="kb-key kb-key-white kb-key-note-d" data-octave="<%=oct%>" data-note="d"></div>
+            <div class="kb-key kb-key-black kb-key-note-ds" data-octave="<%=oct%>" data-note="ds"></div>
+            <div class="kb-key kb-key-white kb-key-note-e" data-octave="<%=oct%>" data-note="e"></div>
+            <div class="kb-key kb-key-white kb-key-note-f" data-octave="<%=oct%>" data-note="f"></div>
+            <div class="kb-key kb-key-black kb-key-note-fs" data-octave="<%=oct%>" data-note="fs"></div>
+            <div class="kb-key kb-key-white kb-key-note-g" data-octave="<%=oct%>" data-note="g"></div>
+            <div class="kb-key kb-key-black kb-key-note-gs" data-octave="<%=oct%>" data-note="gs"></div>
+            <div class="kb-key kb-key-white kb-key-note-a" data-octave="<%=oct%>" data-note="a"></div>
+            <div class="kb-key kb-key-black kb-key-note-as" data-octave="<%=oct%>" data-note="as"></div>
+            <div class="kb-key kb-key-white kb-key-note-b" data-octave="<%=oct%>" data-note="b"></div>
+        </div>
+    <% }); %>
+</div>

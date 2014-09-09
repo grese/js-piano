@@ -1,0 +1,27 @@
+<div class="piano-controls-container piano-octaves<%=settings.get('octaves')%>">
+    <ul class="piano-controls-list list-unstyled list-inline">
+        <li>
+            <label>Octaves</label>
+            <input type="number" class="form-control" value="<%=settings.get('octaves')%>"
+                   min="1" max="<%=settings.get('maxOctaves')%>" id="piano-num-octaves" />
+        </li>
+    </ul>
+</div>
+<div class="piano piano-octaves<%=settings.get('octaves')%>">
+    <% _.each(octaveList, function(oct) { %>
+    <div class="piano-octave" data-octave="<%=oct%>">
+        <div class="piano-key piano-key-white piano-key-note-c" data-octave="<%=oct%>" data-note="c"></div>
+        <div class="piano-key piano-key-black piano-key-note-cs" data-octave="<%=oct%>" data-note="cs"></div>
+        <div class="piano-key piano-key-white piano-key-note-d" data-octave="<%=oct%>" data-note="d"></div>
+        <div class="piano-key piano-key-black piano-key-note-ds" data-octave="<%=oct%>" data-note="ds"></div>
+        <div class="piano-key piano-key-white piano-key-note-e" data-octave="<%=oct%>" data-note="e"></div>
+        <div class="piano-key piano-key-white piano-key-note-f" data-octave="<%=oct%>" data-note="f"></div>
+        <div class="piano-key piano-key-black piano-key-note-fs" data-octave="<%=oct%>" data-note="fs"></div>
+        <div class="piano-key piano-key-white piano-key-note-g" data-octave="<%=oct%>" data-note="g"></div>
+        <div class="piano-key piano-key-black piano-key-note-gs" data-octave="<%=oct%>" data-note="gs"></div>
+        <div class="piano-key piano-key-white piano-key-note-a" data-octave="<%=oct%>" data-note="a"></div>
+        <div class="piano-key piano-key-black piano-key-note-as" data-octave="<%=oct%>" data-note="as"></div>
+        <div class="piano-key piano-key-white piano-key-note-b" data-octave="<%=oct%>" data-note="b"></div>
+    </div>
+    <% }); %>
+</div>

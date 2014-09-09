@@ -1,0 +1,7 @@
+.recorder-playback-progress .progress{
+    height: 8px;
+    margin-bottom: 0;
+}
+.recorder-record-active{
+    color: #bb0000;
+}

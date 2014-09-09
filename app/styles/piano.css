@@ -1,0 +1,83 @@
+.piano-container{
+    height: 220px;
+}
+.piano{
+    height: 160px;
+    background-color: #666;
+    padding: 0 20px 5px 20px;
+}
+.piano-controls-list{
+    margin-left: 0;
+    margin-bottom: 0;
+    text-align: right;
+}
+#piano-num-octaves{
+    width: 50px;
+    padding: 6px 8px;
+    height: 30px;
+}
+.piano-controls-container{
+    background: #666;
+    padding: 5px 20px 10px 20px;
+    margin-bottom: 0;
+}
+.piano-controls-container label{
+    font-weight: 100;
+    margin-bottom: 0;
+    color: #fff;
+}
+.piano.piano-octaves1,
+.piano-controls-container.piano-octaves1{
+    width: 235px;
+}
+.piano.piano-octaves2,
+.piano-controls-container.piano-octaves2{
+    width: 435px;
+}
+.piano.piano-octaves3,
+.piano-controls-container.piano-octaves3{
+    width: 630px;
+}
+.piano.piano-octaves4,
+.piano-controls-container.piano-octaves4{
+    width: 820px;
+}
+.piano.piano-octaves5,
+.piano-controls-container.piano-octaves5{
+    width: 1020px;
+}
+.piano-octave{
+    display: inline;
+    margin-left: -1px;
+}
+.piano-key{
+    display: inline-block;
+    position: relative;
+}
+.piano-key-white:hover{
+    background: #eee;
+}
+.piano-key-black:hover{
+    background: #393939;
+}
+.piano-key-white{
+    background: #fff;
+    height: 100%;
+    width: 25px;
+    margin-left: -10px;
+    margin-right: -10px;
+    z-index: 1;
+}
+.piano-key-note-e, .piano-key-note-b{
+    margin-right: 0;
+}
+.piano-key-note-f, .piano-key-note-c{
+    margin-left: 0;
+}
+.piano-key-black{
+    background: #000;
+    width: 15px;
+    height: 70%;
+    vertical-align: top;
+    z-index: 2;
+}
