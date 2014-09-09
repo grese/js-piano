@@ -1,5 +1,5 @@
 {
-  "name": "backbone-boilerplate",
+  "name": "JSPiano",
   "version": "1.0.0",
     "dependencies": {
         "fluent-ffmpeg": "~2.0.0-rc2"

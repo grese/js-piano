@@ -4,7 +4,10 @@ define(function(require, exports, module) {
     var app = require("app");;
 
     var Layout = Backbone.Layout.extend({
-        template: require("ldtpl!./template")
+        template: require("ldtpl!./template"),
+        afterRender: function(){
+            this.$el.addClass('recorder-view')
+        }
     });
 
     module.exports = Layout;

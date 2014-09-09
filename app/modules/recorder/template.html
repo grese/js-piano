@@ -1,67 +1,64 @@
-<div class="kb-songname-container">
+<div class="recorder-songname-container">
     <div class="row">
         <div class="col-xs-9">
-            <input type="text" id="song-name-input" class="form-control"
-                   value="<%=song.get('name')%>"
-            <% if(settings.oldsong){ %> readonly="readonly" <% } %> />
+            <input type="text" id="song-name-input" class="form-control" value="">
+
         </div>
         <div class="col-xs-1">
-            <button id="kb-new-btn" class="btn btn-default btn-sm kb-new-btn kb-controls-btn">
+            <button id="recorder-new-btn" class="btn btn-default btn-sm recorder-new-btn recorder-controls-btn">
                 <span class="glyphicon glyphicon-plus"></span>
             </button>
         </div>
         <div class="col-xs-1">
-            <button class="btn btn-default btn-sm kb-save-btn kb-controls-btn"
-            <% if(settings.oldsong || recorder.events.length === 0){ %> disabled="disabled" <% } %> >
+            <button class="btn btn-default btn-sm recorder-save-btn recorder-controls-btn" >
             <span class="glyphicon glyphicon-floppy-save"></span>
             </button>
         </div>
     </div>
 </div>
 <hr/>
-<div class="kb-controls-container kb-octaves<%=settings.octaves%> clearfix">
+<div class="recorder-controls-container clearfix">
     <ul class="list-unstyled list-inline">
         <li>
             <label>Record</label><br/>
-            <button id="kb-record-btn" class="btn btn-default btn-sm kb-controls-btn"
-            <% if(settings.oldsong){ %> disabled="disabled" <% } %> >
+            <button id="recorder-record-btn" class="btn btn-default btn-sm recorder-controls-btn">
             <span class="glyphicon glyphicon-record"></span>
             </button>
         </li>
         <li>
             <label>Play</label><br/>
-            <button id="kb-play-btn" class="btn btn-default btn-sm kb-controls-btn">
+            <button id="recorder-play-btn" class="btn btn-default btn-sm recorder-controls-btn">
                 <span class="glyphicon glyphicon-play"></span>
             </button>
         </li>
         <li>
             <label>Pause</label><br/>
-            <button id="kb-pause-btn" class="btn btn-default btn-sm kb-controls-btn">
+            <button id="recorder-pause-btn" class="btn btn-default btn-sm recorder-controls-btn">
                 <span class="glyphicon glyphicon-pause"></span>
             </button>
         </li>
         <li>
             <label>Stop</label><br/>
-            <button id="kb-stop-btn" class="btn btn-default btn-sm kb-controls-btn">
+            <button id="recorder-stop-btn" class="btn btn-default btn-sm recorder-controls-btn">
                 <span class="glyphicon glyphicon-stop"></span>
             </button>
         </li>
         <li>
             <label>Rew</label><br/>
-            <button id="kb-rew-btn" class="btn btn-default btn-sm kb-controls-btn">
+            <button id="recorder-rew-btn" class="btn btn-default btn-sm recorder-controls-btn">
                 <span class="glyphicon glyphicon-backward"></span>
             </button>
         </li>
         <li>
             <label>FF</label><br/>
-            <button id="kb-ff-btn" class="btn btn-default btn-sm kb-controls-btn">
+            <button id="recorder-ff-btn" class="btn btn-default btn-sm recorder-controls-btn">
                 <span class="glyphicon glyphicon-forward"></span>
             </button>
         </li>
     </ul>
-    <div class="kb-playback-progress">
+    <div class="recorder-playback-progress">
         <div class="progress">
-            <div id="kb-progress-bar" class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+            <div id="recorder-progress-bar" class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
     </div>
 </div>

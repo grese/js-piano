@@ -8,7 +8,8 @@ define(function(require, exports, module) {
       Nav = require('modules/nav/index'),
       Footer = require('modules/footer/index'),
       Song = require('modules/song/index'),
-      Piano = require('modules/piano/index');
+      Piano = require('modules/piano/index'),
+      Recorder = require('modules/recorder/index');
 
   // Defining the application router.
   var Router = Backbone.Router.extend({
@@ -17,10 +18,13 @@ define(function(require, exports, module) {
       },
       routes: {
         "": "index",
-        ":name": "index"
+        ":songname": "index"
       },
 
-    index: function(song) {
+    index: function(songname) {
+        // Recorder will go into 'listen mode' if we are loading a previously recorded song...
+        var listenMode = (songname  && (songname !== 'Untitled'));
+
         var Layout = Backbone.Layout.extend({
             el: 'main',
             template: require('ldtpl!./templates/main'),
@@ -28,7 +32,8 @@ define(function(require, exports, module) {
                 ".nav-container": new Nav.Views.Nav({}),
                 ".footer-container": new Footer.Views.Footer({}),
                 ".songs-container": new Song.Views.List({collection: this.songs}),
-                ".piano-container": new Piano.Views.Piano()
+                ".piano-container": new Piano.Views.Piano(),
+                ".recorder-container": new Recorder.Views.Recorder({listenMode: listenMode})
             }
         });
         new Layout().render();

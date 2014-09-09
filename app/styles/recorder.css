@@ -1,3 +1,7 @@
+.recorder-container{
+    max-width: 435px;
+    margin-bottom: 15px;
+}
 .recorder-playback-progress .progress{
     height: 8px;
     margin-bottom: 0;
