@@ -1,64 +1,71 @@
-<div class="recorder-songname-container">
-    <div class="row">
-        <div class="col-xs-9">
-            <input type="text" id="song-name-input" class="form-control" value="">
+<div class="well">
+    <div class="recorder-songname-container">
+        <div class="row">
+            <div class="col-xs-9">
+                <input type="text" id="song-name-input" class="form-control" value="<%=song.get('name')%>"
+                       <% if(listenMode){ %> readonly='readonly' <% } %> >
 
-        </div>
-        <div class="col-xs-1">
-            <button id="recorder-new-btn" class="btn btn-default btn-sm recorder-new-btn recorder-controls-btn">
-                <span class="glyphicon glyphicon-plus"></span>
-            </button>
-        </div>
-        <div class="col-xs-1">
-            <button class="btn btn-default btn-sm recorder-save-btn recorder-controls-btn" >
-            <span class="glyphicon glyphicon-floppy-save"></span>
-            </button>
+            </div>
+            <div class="col-xs-1">
+                <button id="recorder-new-btn" class="btn btn-default btn-sm recorder-new-btn recorder-controls-btn">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
+            </div>
+            <% if(!listenMode){ %>
+                <div class="col-xs-1">
+                    <button class="btn btn-default btn-sm recorder-save-btn recorder-controls-btn" >
+                        <span class="glyphicon glyphicon-floppy-save"></span>
+                    </button>
+                </div>
+            <% } %>
         </div>
     </div>
-</div>
-<hr/>
-<div class="recorder-controls-container clearfix">
-    <ul class="list-unstyled list-inline">
-        <li>
-            <label>Record</label><br/>
-            <button id="recorder-record-btn" class="btn btn-default btn-sm recorder-controls-btn">
-            <span class="glyphicon glyphicon-record"></span>
-            </button>
-        </li>
-        <li>
-            <label>Play</label><br/>
-            <button id="recorder-play-btn" class="btn btn-default btn-sm recorder-controls-btn">
-                <span class="glyphicon glyphicon-play"></span>
-            </button>
-        </li>
-        <li>
-            <label>Pause</label><br/>
-            <button id="recorder-pause-btn" class="btn btn-default btn-sm recorder-controls-btn">
-                <span class="glyphicon glyphicon-pause"></span>
-            </button>
-        </li>
-        <li>
-            <label>Stop</label><br/>
-            <button id="recorder-stop-btn" class="btn btn-default btn-sm recorder-controls-btn">
-                <span class="glyphicon glyphicon-stop"></span>
-            </button>
-        </li>
-        <li>
-            <label>Rew</label><br/>
-            <button id="recorder-rew-btn" class="btn btn-default btn-sm recorder-controls-btn">
-                <span class="glyphicon glyphicon-backward"></span>
-            </button>
-        </li>
-        <li>
-            <label>FF</label><br/>
-            <button id="recorder-ff-btn" class="btn btn-default btn-sm recorder-controls-btn">
-                <span class="glyphicon glyphicon-forward"></span>
-            </button>
-        </li>
-    </ul>
-    <div class="recorder-playback-progress">
-        <div class="progress">
-            <div id="recorder-progress-bar" class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+    <hr class="recorder-songname-divider"/>
+    <div class="recorder-controls-container clearfix">
+        <ul class="list-unstyled list-inline recorder-buttons-list">
+            <% if(!listenMode){ %>
+                <li>
+                    <label class="recorder-button-label">Record</label><br/>
+                    <button id="recorder-record-btn" class="btn btn-default btn-sm recorder-controls-btn">
+                        <span class="glyphicon glyphicon-record"></span>
+                    </button>
+                </li>
+            <% } %>
+            <li>
+                <label class="recorder-button-label">Play</label><br/>
+                <button id="recorder-play-btn" class="btn btn-default btn-sm recorder-controls-btn">
+                    <span class="glyphicon glyphicon-play"></span>
+                </button>
+            </li>
+            <li>
+                <label class="recorder-button-label">Pause</label><br/>
+                <button id="recorder-pause-btn" class="btn btn-default btn-sm recorder-controls-btn">
+                    <span class="glyphicon glyphicon-pause"></span>
+                </button>
+            </li>
+            <li>
+                <label class="recorder-button-label">Stop</label><br/>
+                <button id="recorder-stop-btn" class="btn btn-default btn-sm recorder-controls-btn">
+                    <span class="glyphicon glyphicon-stop"></span>
+                </button>
+            </li>
+            <li>
+                <label class="recorder-button-label">Rew</label><br/>
+                <button id="recorder-rew-btn" class="btn btn-default btn-sm recorder-controls-btn">
+                    <span class="glyphicon glyphicon-backward"></span>
+                </button>
+            </li>
+            <li>
+                <label class="recorder-button-label">FF</label><br/>
+                <button id="recorder-ff-btn" class="btn btn-default btn-sm recorder-controls-btn">
+                    <span class="glyphicon glyphicon-forward"></span>
+                </button>
+            </li>
+        </ul>
+        <div class="recorder-playback-progress">
+            <div class="progress">
+                <div id="recorder-progress-bar" class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
         </div>
     </div>
 </div>
