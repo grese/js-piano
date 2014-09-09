@@ -7,3 +7,7 @@
 @import "nav.css";
 @import "piano.css";
 @import "recorder.css";
+
+.tooltip{
+    white-space: nowrap;
+}

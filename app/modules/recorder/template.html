@@ -6,18 +6,20 @@
                        <% if(listenMode){ %> readonly='readonly' <% } %> >
 
             </div>
-            <div class="col-xs-1">
-                <button id="recorder-new-btn" class="btn btn-default btn-sm recorder-new-btn recorder-controls-btn">
-                    <span class="glyphicon glyphicon-plus"></span>
-                </button>
-            </div>
             <% if(!listenMode){ %>
                 <div class="col-xs-1">
-                    <button class="btn btn-default btn-sm recorder-save-btn recorder-controls-btn" >
+                    <button title="Save Changes"
+                            class="btn btn-default btn-sm recorder-save-btn recorder-controls-btn has-tooltip" >
                         <span class="glyphicon glyphicon-floppy-save"></span>
                     </button>
                 </div>
             <% } %>
+            <div class="col-xs-1">
+                <button id="recorder-new-btn" title="Create New Song"
+                        class="btn btn-default btn-sm recorder-new-btn recorder-controls-btn has-tooltip">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
+            </div>
         </div>
     </div>
     <hr class="recorder-songname-divider"/>

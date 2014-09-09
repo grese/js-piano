@@ -53,6 +53,9 @@ define(function(require, exports, module) {
                 ".piano-container": new Piano.Views.Piano(),
                 ".recorder-container": new Recorder.Views.Recorder({song: song, settings: this.recorderSettings}),
                 ".modal-container": new Modal.Views.Modal()
+            },
+            afterRender: function(){
+                $('.has-tooltip').tooltip();
             }
         });
         new Layout().render();

@@ -10,8 +10,6 @@ define(function(require) {
   // Test that the Router exists.
   test("Application Router", 2, function() {
     ok(Router, "Router constructor exists.");
-
-    ok(Router.prototype instanceof Backbone.Router,
-      "Router is a Backbone.Router");
+    ok(Router.prototype instanceof Backbone.Router, "Router is a Backbone.Router");
   });
 });
