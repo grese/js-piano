@@ -5,7 +5,9 @@ define(function(require, exports, module) {
     var PianoSettings = Backbone.Model.extend({
         defaults: {
             maxOctaves: 2,
-            octaves: 2
+            octaves: 2,
+            instrument: 'piano',
+            format: 'mp3'
         }
     });
 
