@@ -1,4 +1,4 @@
-jskb2
+js-piano
 =====
 
-JSKB2
+A JavaScript piano & recording console.
