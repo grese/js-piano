@@ -47,12 +47,12 @@ define(function(require, exports, module) {
             el: 'main',
             template: require('ldtpl!./templates/main'),
             views: {
-                ".nav-container": new Nav.Views.Nav(),
-                ".footer-container": new Footer.Views.Footer(),
-                ".songs-container": new Song.Views.List({collection: this.songs}),
-                ".piano-container": new Piano.Views.Piano(),
-                ".recorder-container": new Recorder.Views.Recorder({song: song, settings: this.recorderSettings}),
-                ".modal-container": new Modal.Views.Modal()
+                '.nav-container': new Nav.Views.Nav(),
+                '.footer-container': new Footer.Views.Footer(),
+                '.songs-container': new Song.Views.List({collection: this.songs}),
+                '.piano-container': new Piano.Views.Piano(),
+                '.recorder-container': new Recorder.Views.Recorder({song: song, settings: this.recorderSettings}),
+                '.modal-container': new Modal.Views.Modal()
             },
             afterRender: function(){
                 $('.has-tooltip').tooltip();

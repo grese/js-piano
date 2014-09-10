@@ -21,7 +21,7 @@ define(function(require, exports, module) {
             };
         },
         afterRender: function(){
-            this.$el.addClass('recorder-view')
+            this.$el.addClass('recorder-view');
         }
     });
 
