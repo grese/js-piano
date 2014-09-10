@@ -48,7 +48,6 @@ define(function(require, exports, module) {
             this.$progressBar = $('#kb-progress-bar');
             this.$songNameInput = $('#song-name-input');
         },
-        $octaveInput: null,
         playSound: function(sound){
             if (this.spritemap[sound]) {
                 this.updateSoundTimes(this.spritemap[sound]);
