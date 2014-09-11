@@ -25,17 +25,12 @@
                     <%=model.get('closeButtonText')%>
                 </button>
                 <% } %>
-                <% _.each(model.get('footerButtons'), function(button, index){ %>
-                    <% if(button.buttonClass){ %>
-                        <button class="btn <%=button.buttonClass%> ok-button" id="modal-btn-<%=index%>">
-                            <%=button.text%>
-                        </button>
-                    <% }else{ %>
-                        <button class="btn btn-default ok-button" id="modal-btn-<%=index%>">
-                            <%=button.text%>
-                        </button>
-                    <% } %>
-                <% });%>
+                <% if(model.get('hasOkButton')){ %>
+                <button type="button" class="btn btn-primary ok-button">
+                    ok-button
+                    <%=model.get('okButtonText')%>
+                </button>
+                <% } %>
             </div>
             <% } %>
         </div>

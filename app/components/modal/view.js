@@ -8,8 +8,7 @@ define(function(require, exports, module) {
         template: require("ldtpl!./template"),
         destroyModal: function(){
             this.hide();
-            var mm = new ModalModel();
-            this.model = mm;
+            this.model = new ModalModel();
         },
         getSizeClass: function(size){
             switch(size){
@@ -27,11 +26,11 @@ define(function(require, exports, module) {
         serialize: function() {
             return {
                 model: this.model,
-                sizeClass: this.getSizeClass(this.model.size)
+                sizeClass: this.getSizeClass(this.model.get('size'))
             };
         },
         afterRender: function() {
-            this.$modal = $('#'+this.elementId+' .modal').eq(0);
+            this.$modal = this.$el.find('.modal').eq(0);
             if(this.model.get('visible')){
                 this.show();
             }
@@ -43,17 +42,14 @@ define(function(require, exports, module) {
             this.$modal.modal('hide');
             $('.modal-backdrop').remove();
         },
-        elementId: 'modal-view',
         initialize: function() {
             if(!this.model){
                 this.model = new ModalModel();
             }
-            this.$el.attr('id', this.elementId);
             this.listenTo(this.model, 'change', this.render);
         },
         events: {
-            "click .modal-close": 'closeClicked',
-            "click .ok-button": 'okClicked'
+            "click .modal-ok": 'okClicked'
         },
         okClicked: function(){
             var targ = this.model.get('actionTarget'),
@@ -61,9 +57,6 @@ define(function(require, exports, module) {
             if(targ && act){
                 targ.trigger(act);
             }
-        },
-        closeClicked: function(){
-            console.log('closing modal');
         }
     });
 

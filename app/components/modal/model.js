@@ -6,7 +6,7 @@ define(function(require, exports, module) {
         defaults: {
             title: 'Modal Title',
             body: '',
-            size: 'medium',
+            size: 'small',
             visible: false,
             dismissable: true,
             hasFooter: true,
@@ -14,13 +14,8 @@ define(function(require, exports, module) {
             closeButtonText: 'Close',
             actionTarget: null,
             okAction: null,
-            footerButtons: [
-                {
-                    text: 'Ok',
-                    action: 'okAction',
-                    on: 'click'
-                }
-            ]
+            okButtonText: 'Ok',
+            hasOkButton: true
         }
     });
 

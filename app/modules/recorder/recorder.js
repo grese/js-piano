@@ -5,27 +5,29 @@ define(function(require, exports, module) {
         timer: null,
         duration: 0,
         events: [],
-
-        recordSound: function(sound){
-            this.recorder.events.push({
-                instrument: this.settings.instrument,
-                time: this.recorder.duration,
+        recording: false,
+        recordSound: function(sound, instrument){
+            this.events.push({
+                instrument: instrument,
+                time: this.duration,
                 sound: sound
             });
         },
-        startRecord: function(){
+        startRecording: function(){
             var self = this,
-                duration = this.recorder.duration ? this.recorder.duration : 0;
-            this.recorder.timer = setInterval(function(){
-                self.recorder.duration = ++duration;
+                duration = this.duration ? this.duration : 0;
+            this.recording = true;
+            this.timer = setInterval(function(){
+                self.duration = ++duration;
             }, 1);
+            this.trigger('recordingStarted');
         },
-        stopRecord: function(){
-            clearInterval(this.recorder.timer);
-            this.render();
+        stopRecording: function(){
+            this.recording = false;
+            clearInterval(this.timer);
+            this.trigger('recordingStopped');
         }
     };
-
     _.extend(Recorder, Backbone.Events);
 
     module.exports = Recorder;

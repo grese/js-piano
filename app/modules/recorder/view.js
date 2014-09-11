@@ -3,18 +3,28 @@ define(function(require, exports, module) {
 
     var app = require("app"),
         Player = require('./player'),
-        Recorder = require('./recorder');
+        Recorder = require('./recorder'),
+        Modal = require('../modal/index'),
+        ModalModel = Modal.Model,
+        ModalView = Modal.Views.Modal;
 
     var Layout = Backbone.Layout.extend({
         template: require("ldtpl!./template"),
+        player: null,
+        recorder: null,
         initialize: function(){
             this.listenTo(this.settings, 'change', this.render);
+            this.recorder = Recorder;
+            this.player = Player;
+            this.player.recorder = this.recorder;
+            this.player.on('playbackProgress', this.updatePlaybackProgress);
             if(!this.song){
                 // If a song was not found, we need to transition back to / to create a new one.
                 app.router.navigate('/', {trigger: true});
             }else{
                 this.listenTo(this.song, 'change', this.render);
             }
+            this.on('createSong', this.createSong);
         },
         serialize: function(){
             return {
@@ -41,55 +51,41 @@ define(function(require, exports, module) {
             "mouseup #recorder-rew-btn": 'rewReleased'
         },
         toggleRecording: function(){
-            /*if(this.settings.recording){
-                this.settings.recording = false;
-                this.$recordBtn.removeClass('kb-record-active');
-                this.stopRecord();
+            if(this.recorder.recording){
+                this.$recordBtn.removeClass('record-active');
+                this.recorder.startRecording();
             }else{
-                this.settings.recording = true;
-                this.$recordBtn.addClass('kb-record-active');
-                this.startRecord();
+                this.$recordBtn.removeClass('record-active');
+                this.recorder.startRecording();
             }
-            this.$recordBtn.focusout();*/
+            this.$recordBtn.focusout();
         },
         updatePlaybackProgress: function(total, current){
-            /*var percent = (current / total) * 100;
-            this.$progressBar.css('width', percent+'%');*/
+            var percent = (current / total) * 100;
+            this.$progressBar.css('width', percent+'%');
         },
 
         newSongPushed: function(){
-            /*if(this.recorder.events.length > 0 || this.song.get('name') !== 'untitled'){
-                var mm = new ModalModel({
-                    title: 'Unsaved Changes',
-                    body: '<p>The recorder currently has unsaved changes.  If you choose to create ' +
-                        'a new song without saving, your changes will be lost.  Click \'Ok\' to continue, or ' +
-                        '\'Close\' to continue working on the current song.</p>',
-                    size: 'small',
-                    visible: true,
-                    dismissable: true,
-                    hasFooter: true,
-                    hasCloseButton: true,
-                    closeButtonText: 'Close',
-                    actionTarget: this,
-                    okAction: 'createSong',
-                    footerButtons: [
-                        {
-                            text: 'Ok',
-                            action: 'okAction',
-                            on: 'click'
-                        }
-                    ]
-                });
-                this.on('createSong', this.createSong);
-                this.modal.model = mm;
-                this.modal.render();
-            }*/
+            if(this.recorder.events.length > 0 || this.song.get('name') !== 'untitled'){
+
+            }
+            var mm = new ModalModel({
+                title: 'Unsaved Changes',
+                body: '<p>The recorder currently has unsaved changes.  If you choose to create ' +
+                    'a new song without saving, your changes will be lost.  Click \'Ok\' to continue, or ' +
+                    '\'Close\' to continue working on the current song.</p>',
+                visible: true,
+                actionTarget: this,
+                okAction: 'createSong'
+            });
+            this.modal.model = mm;
+            this.modal.render();
         },
         createSong: function(){
-            /*this.modal.destroyModal();
-            this.song = new SongModel();
+            this.modal.destroyModal();
+            //this.song = new SongModel();
             this.render();
-            Backbone.history.navigate('', {trigger: true});*/
+            Backbone.history.navigate('', {trigger: true});
         },
         playPressed: function(){
             /*if(this.playback.state !== 'pause'){

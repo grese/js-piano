@@ -27,6 +27,7 @@ define(function(require, exports, module) {
           });
           this.songs = new Song.Collection([s1, s2]);
           this.recorderSettings = new Recorder.SettingsModel();
+          this.modalView = new Modal.Views.Modal();
       },
       routes: {
         "": "index",
@@ -43,6 +44,7 @@ define(function(require, exports, module) {
             song = new Song.Model();
             this.recorderSettings.set('listenMode', false);
         }
+
         var Layout = Backbone.Layout.extend({
             el: 'main',
             template: require('ldtpl!./templates/main'),
@@ -51,8 +53,12 @@ define(function(require, exports, module) {
                 '.footer-container': new Footer.Views.Footer(),
                 '.songs-container': new Song.Views.List({collection: this.songs}),
                 '.piano-container': new Piano.Views.Piano(),
-                '.recorder-container': new Recorder.Views.Recorder({song: song, settings: this.recorderSettings}),
-                '.modal-container': new Modal.Views.Modal()
+                '.recorder-container': new Recorder.Views.Recorder({
+                    song: song,
+                    settings: this.recorderSettings,
+                    modal: this.modalView
+                }),
+                '.modal-container': this.modalView
             },
             afterRender: function(){
                 $('.has-tooltip').tooltip();

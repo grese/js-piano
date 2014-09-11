@@ -6,28 +6,28 @@ define(function(require, exports, module) {
         timer: null,
         playHead: 0,
         eventIdx: 0,
+        recorder: null,
         advancePlayer: function(){
             var self = this,
                 interval = setInterval(function(){
-                    if(self.playback.state !== 'fwd'){
+                    if(self.state !== 'fwd'){
                         clearInterval(interval);
                         return;
                     }else{
                         var numEvts = self.recorder.events.length,
-                            evt = self.recorder.events[self.playback.eventIdx];
-
+                            evt = self.recorder.events[self.eventIdx];
                         if(evt){
-                            if(self.playback.playHead >= evt.time){
-                                if(numEvts > self.playback.eventIdx){
-                                    ++self.playback.eventIdx;
+                            if(self.playHead >= evt.time){
+                                if(numEvts > self.eventIdx){
+                                    ++self.eventIdx;
                                 }
                             }
-                            if(self.playback.playHead < self.recorder.duration){
-                                ++self.playback.playHead;
-                                self.updatePlaybackProgress(self.recorder.duration, self.playback.playHead);
+                            if(self.playHead < self.recorder.duration){
+                                ++self.playHead;
+                                self.trigger('playbackProgress', self.recorder.duration, self.playHead);
                             }else{
-                                self.playback.playHead = self.recorder.duration;
-                                self.updatePlaybackProgress(self.recorder.duration, self.recorder.duration);
+                                self.playHead = self.recorder.duration;
+                                self.trigger('playbackProgress', self.recorder.duration, self.recorder.duration);
                             }
                         }
                     }
@@ -35,25 +35,25 @@ define(function(require, exports, module) {
         },
         rewindPlayer: function(){
             var self = this;
-            self.playback.timer = setInterval(function() {
+            self.timer = setInterval(function() {
                 var evt;
-                if (self.playback.state !== 'rew') {
-                    clearInterval(self.playback.timer);
+                if (self.state !== 'rew') {
+                    clearInterval(self.timer);
                     return;
                 } else {
-                    evt = self.recorder.events[self.playback.eventIdx];
+                    evt = self.recorder.events[self.eventIdx];
                     if (evt) {
-                        if (self.playback.playHead > 0) {
-                            --self.playback.playHead;
-                            self.updatePlaybackProgress(self.recorder.duration, self.playback.playHead);
+                        if (self.playHead > 0) {
+                            --self.playHead;
+                            self.trigger('playbackProgress', self.recorder.duration, self.playHead);
                         } else {
-                            self.playback.playHead = 0;
-                            self.updatePlaybackProgress(1, 0);
+                            self.playHead = 0;
+                            self.trigger('playbackProgress', 1, 0);
                         }
-                        if ((self.playback.eventIdx > 0) && (self.playback.playHead < evt.time)) {
-                            var nextEvt = self.recorder.events[self.playback.eventIdx-1];
-                            if(nextEvt.time < self.playback.playHead){
-                                --self.playback.eventIdx;
+                        if ((self.eventIdx > 0) && (self.playHead < evt.time)) {
+                            var nextEvt = self.recorder.events[self.eventIdx-1];
+                            if(nextEvt.time < self.playHead){
+                                --self.eventIdx;
                             }
                         }
                     }
@@ -68,42 +68,43 @@ define(function(require, exports, module) {
                     totalDuration = self.recorder.duration;
 
                 if(typeof eventIdx === 'undefined'){
-                    self.playback.eventIdx = 0;
+                    self.eventIdx = 0;
                 }
                 if(typeof pos === 'undefined'){
-                    self.playback.playHead = 0;
+                    self.playHead = 0;
                 }
 
-                self.playback.timer = setInterval(function(){
-                    ++self.playback.playHead;
-                    if(self.playback.eventIdx < numSounds){
-                        sound = self.recorder.events[self.playback.eventIdx];
+                self.timer = setInterval(function(){
+                    ++self.playHead;
+                    if(self.eventIdx < numSounds){
+                        sound = self.recorder.events[self.eventIdx];
                     }else{
-                        clearInterval(self.playback.timer);
-                        self.updatePlaybackProgress(totalDuration, totalDuration);
-                        self.playback.state = 'stop';
+                        clearInterval(self.timer);
+                        self.trigger('playbackProgress', totalDuration, totalDuration);
+                        self.state = 'stop';
                     }
-                    if(sound && sound.time === self.playback.playHead){
+                    if(sound && sound.time === self.playHead){
                         self.playSound(sound.sound);
-                        self.playback.eventIdx++;
-                    }else if(sound && sound.time < self.playback.playHead){
-                        self.playback.eventIdx++;
+                        self.eventIdx++;
+                    }else if(sound && sound.time < self.playHead){
+                        self.eventIdx++;
                     }
-                    if(self.playback.playHead % 10 === 0)
-                        self.updatePlaybackProgress(totalDuration, self.playback.playHead);
+                    if(self.playHead % 10 === 0)
+                        self.trigger('playbackProgress', totalDuration, self.playHead);
+
                 }, 1);
             }
         },
         stopPlayback: function(){
-            clearInterval(this.playback.timer);
-            this.playback.playHead = 0;
-            this.playback.eventIdx = 0;
-            this.playback.state = 'stop';
-            this.updatePlaybackProgress(1,0);
+            clearInterval(this.timer);
+            this.playHead = 0;
+            this.eventIdx = 0;
+            this.state = 'stop';
+            this.trigger('playbackProgress', 1,0);
         },
         pausePlayback: function(){
-            clearInterval(this.playback.timer);
-            this.playback.state = 'pause';
+            clearInterval(this.timer);
+            this.state = 'pause';
         }
     };
 
