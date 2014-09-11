@@ -4,6 +4,7 @@ define(function(require, exports, module) {
 
     var Song = Backbone.Model.extend({
         defaults: {
+            instrument: 'piano',
             name: 'Untitled',
             duration: 0,
             events: []

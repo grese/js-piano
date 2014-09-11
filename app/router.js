@@ -45,6 +45,13 @@ define(function(require, exports, module) {
             this.recorderSettings.set('listenMode', false);
         }
 
+        this.recorderView = new Recorder.Views.Recorder({
+            song: song,
+            settings: this.recorderSettings,
+            modal: this.modalView
+        });
+        this.pianoView = new Piano.Views.Piano();
+
         var Layout = Backbone.Layout.extend({
             el: 'main',
             template: require('ldtpl!./templates/main'),
@@ -52,12 +59,8 @@ define(function(require, exports, module) {
                 '.nav-container': new Nav.Views.Nav(),
                 '.footer-container': new Footer.Views.Footer(),
                 '.songs-container': new Song.Views.List({collection: this.songs}),
-                '.piano-container': new Piano.Views.Piano(),
-                '.recorder-container': new Recorder.Views.Recorder({
-                    song: song,
-                    settings: this.recorderSettings,
-                    modal: this.modalView
-                }),
+                '.piano-container': this.pianoView,
+                '.recorder-container': this.recorderView,
                 '.modal-container': this.modalView
             },
             afterRender: function(){

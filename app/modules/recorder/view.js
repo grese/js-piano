@@ -12,18 +12,19 @@ define(function(require, exports, module) {
         template: require("ldtpl!./template"),
         player: null,
         recorder: null,
+        instrument: null,
         initialize: function(){
-            this.listenTo(this.settings, 'change', this.render);
-            this.recorder = Recorder;
-            this.player = Player;
-            this.player.recorder = this.recorder;
-            this.player.on('playbackProgress', this.updatePlaybackProgress);
             if(!this.song){
                 // If a song was not found, we need to transition back to / to create a new one.
                 app.router.navigate('/', {trigger: true});
             }else{
                 this.listenTo(this.song, 'change', this.render);
             }
+            this.recorder = Recorder;
+            this.player = new Player(this.song.get('instrument'));
+            this.player.recorder = this.recorder;
+            this.listenTo(this.player, 'playbackProgress', this.updatePlaybackProgress);
+            this.listenTo(this.settings, 'change', this.render);
             this.on('createSong', this.createSong);
         },
         serialize: function(){
@@ -37,7 +38,6 @@ define(function(require, exports, module) {
             this.$recordBtn = $('#recorder-record-btn');
             this.$progressBar = $('#recorder-progress-bar');
             this.$songNameInput = $('#song-name-input');
-
         },
         events: {
             "click #recorder-pause-btn": 'pausePlayback',
@@ -53,10 +53,12 @@ define(function(require, exports, module) {
         toggleRecording: function(){
             if(this.recorder.recording){
                 this.$recordBtn.removeClass('record-active');
-                this.recorder.startRecording();
+                this.recorder.stopRecording();
+                this.trigger('recordingOff');
             }else{
-                this.$recordBtn.removeClass('record-active');
+                this.$recordBtn.addClass('record-active');
                 this.recorder.startRecording();
+                this.trigger('recordingOn');
             }
             this.$recordBtn.focusout();
         },
@@ -88,29 +90,19 @@ define(function(require, exports, module) {
             Backbone.history.navigate('', {trigger: true});
         },
         playPressed: function(){
-            /*if(this.playback.state !== 'pause'){
-                this.updatePlaybackProgress(1, 0);
-                var self = this;
-                setTimeout(function(){
-                    self.startPlayback();
-                }, 1000);
-            }else{
-                this.startPlayback(this.playback.playHead, this.playback.eventIdx);
-            }*/
+            this.player.play();
         },
         fwdPushed: function(){
-            //this.playback.state = 'fwd';
-            //this.advancePlayer();
+            this.player.startFastForward();
         },
         rewPushed: function(){
-            //this.playback.state = 'rew';
-            //this.rewindPlayer();
+            this.player.startRewind();
         },
         fwdReleased: function(){
-            //this.playback.state = 'pause';
+            this.player.stopFastForward();
         },
         rewReleased: function(){
-            //this.playback.state = 'pause';
+            this.player.stopRewind();
         }
     });
 

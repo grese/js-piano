@@ -1,6 +1,8 @@
 define(function(require, exports, module) {
     "use strict";
 
+    var AudioMap = require('../../audio/audiomap');
+
     var Player = {
         state: 'stop',
         timer: null,
@@ -62,7 +64,7 @@ define(function(require, exports, module) {
         },
         startPlayback: function(pos, eventIdx){
             var self = this;
-            if(!this.settings.recording){
+            if(!this.recording){
                 var sound = null,
                     numSounds = self.recorder.events.length,
                     totalDuration = self.recorder.duration;
@@ -84,7 +86,7 @@ define(function(require, exports, module) {
                         self.state = 'stop';
                     }
                     if(sound && sound.time === self.playHead){
-                        self.playSound(sound.sound);
+                        this.audio.playSound(sound.sound);
                         self.eventIdx++;
                     }else if(sound && sound.time < self.playHead){
                         self.eventIdx++;
@@ -105,10 +107,36 @@ define(function(require, exports, module) {
         pausePlayback: function(){
             clearInterval(this.timer);
             this.state = 'pause';
+        },
+        startFastForward: function(){
+            this.state = 'fwd';
+            this.advancePlayer();
+        },
+        startRewind: function(){
+            this.state = 'rew';
+            this.rewindPlayer();
+        },
+        stopFastForward: function(){
+            this.state = 'pause';
+        },
+        stopRewind: function(){
+            this.state = 'pause';
+        },
+        play: function(){
+            if(this.state !== 'pause'){
+                this.trigger('playbackProgress', 1,0);
+                var self = this;
+                setTimeout(function(){
+                    self.startPlayback();
+                }, 800);
+            }else{
+                this.startPlayback(this.playHead, this.eventIdx);
+            }
         }
     };
 
-    _.extend(Player, Backbone.Events);
-
-    module.exports = Player;
+    var initialize = function(){
+        _.extend(this, Player, Backbone.Events);
+    };
+    module.exports = initialize;
 });

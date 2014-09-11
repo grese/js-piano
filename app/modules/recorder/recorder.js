@@ -6,7 +6,7 @@ define(function(require, exports, module) {
         duration: 0,
         events: [],
         recording: false,
-        recordSound: function(sound, instrument){
+        recordEvent: function(sound, instrument){
             this.events.push({
                 instrument: instrument,
                 time: this.duration,
