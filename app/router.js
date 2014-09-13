@@ -10,7 +10,8 @@ define(function(require, exports, module) {
       Song = require('modules/song/index'),
       Piano = require('modules/piano/index'),
       Recorder = require('modules/recorder/index'),
-      Modal = require('modules/modal/index');
+      Modal = require('modules/modal/index'),
+      AudioMap = require('audio/audiomap');
 
   // Defining the application router.
   var Router = Backbone.Router.extend({

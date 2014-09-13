@@ -9,6 +9,7 @@ define(function(require, exports, module) {
         playHead: 0,
         eventIdx: 0,
         recorder: null,
+        audio: null,
         advancePlayer: function(){
             var self = this,
                 interval = setInterval(function(){
@@ -86,14 +87,13 @@ define(function(require, exports, module) {
                         self.state = 'stop';
                     }
                     if(sound && sound.time === self.playHead){
-                        this.audio.playSound(sound.sound);
+                        self.audio.playNote(sound.sound);
                         self.eventIdx++;
                     }else if(sound && sound.time < self.playHead){
                         self.eventIdx++;
                     }
                     if(self.playHead % 10 === 0)
                         self.trigger('playbackProgress', totalDuration, self.playHead);
-
                 }, 1);
             }
         },
@@ -137,6 +137,7 @@ define(function(require, exports, module) {
 
     var initialize = function(){
         _.extend(this, Player, Backbone.Events);
+        this.audio = new AudioMap('piano', 'player');
     };
     module.exports = initialize;
 });

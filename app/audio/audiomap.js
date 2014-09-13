@@ -8,7 +8,7 @@ define(function(require, exports, module) {
         notes: ['c', 'cs', 'd', 'ds', 'e', 'f', 'fs', 'g', 'gs', 'a', 'as', 'b'],
         spritemap: null,
         noteEnd: 0,
-        recorderOn: false,
+        ready: false,
         playNote: function(sound){
             if (this.spritemap[sound]) {
                 this.findNoteFromSprite(this.spritemap[sound]);
@@ -23,22 +23,39 @@ define(function(require, exports, module) {
                 if (self.audio.currentTime > self.noteEnd) {
                     self.audio.pause();
                 }
-            },false);
+            },true);
         },
-        loadAudioSprite: function(instrument){
+        spriteLoaded: function(){
+            /* spriteLoaded() is called from the context of the audio element, so 'this'
+               refers to that particular audio element.  targetObject points to this instance
+               of the AudioMap class. */
+            this.targetObject.audioReady();
+            this.targetObject = null;
+        },
+        audioReady: function(){
+            this.audio.removeEventListener('canplaythrough', this.spriteLoaded, false);
+            if(!this.ready){
+                this.audio.play();
+                this.audio.pause();
+                this.ready = true;
+                this.trigger('ready');
+            }
+        },
+        loadAudioSprite: function(instrument, name){
             // Load the audio sprite for the current instrument.
             var self = this,
                 audioSprite = '/app/audio/'+instrument+'/output.'+this.format,
                 spriteJson = '/app/audio/'+instrument+'/output.json';
-
             // Get SpriteMap JSON for the selected instrument...
             $.getJSON(spriteJson).then(function(map){
                 console.log('loaded');
                 if(map.spritemap){
                     self.spritemap = map.spritemap;
-                    self.audio = new Audio(audioSprite);
-                    self.audio.play();
-                    self.audio.pause();
+                    self.audio = document.createElement('audio');
+                    self.audio.id = 'audio-'+name;
+                    self.audio.src = audioSprite;
+                    self.audio.targetObject = self;
+                    self.audio.addEventListener('canplaythrough', self.spriteLoaded, false);
                 }else{
                     self.spritemap = null;
                 }
@@ -46,10 +63,11 @@ define(function(require, exports, module) {
         }
     };
 
-    var initialize = function(instrument){
-        _.extend(this, AudioMap);
+    var initialize = function(instrument, name){
         if(!instrument) instrument = this.defaultInstrument;
-        this.loadAudioSprite(instrument);
+        if(!name) name = Date.now();
+        _.extend(this, AudioMap, Backbone.Events);
+        this.loadAudioSprite(instrument, name);
     };
 
     module.exports = initialize;

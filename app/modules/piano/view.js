@@ -19,7 +19,7 @@ define(function(require, exports, module) {
             if(this.settings === null){
                 this.settings = new PianoSettings();
             }
-            this.audio = new AudioMap(this.settings.get('instrument'));
+            this.audio = new AudioMap(this.settings.get('instrument'), 'piano');
             app.router.recorderView.on('recordingOff', function(){
                 self.recorderOn = false;
             });
