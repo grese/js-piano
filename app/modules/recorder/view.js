@@ -59,7 +59,6 @@ define(function(require, exports, module) {
         },
         songNameChanged: function(){
             this.song.set('name', this.$songNameInput.val());
-
         },
         toggleRecording: function(){
             if(this.recorder.recording){
