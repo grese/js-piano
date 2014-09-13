@@ -40,10 +40,10 @@ define(function(require, exports, module) {
             this.$songNameInput = $('#song-name-input');
         },
         events: {
-            "click #recorder-pause-btn": 'pausePlayback',
+            "click #recorder-pause-btn": 'pausePressed',
             "click #recorder-play-btn": 'playPressed',
             "click #recorder-record-btn": 'toggleRecording',
-            "click #recorder-stop-btn": 'stopPlayback',
+            "click #recorder-stop-btn": 'stopPressed',
             "click #recorder-new-btn": 'newSongPushed',
             "mousedown #recorder-ff-btn": 'fwdPushed',
             "mouseup #recorder-ff-btn": 'fwdReleased',
@@ -92,6 +92,9 @@ define(function(require, exports, module) {
         playPressed: function(){
             this.player.play();
         },
+        stopPressed: function(){
+            this.player.stop();
+        },
         fwdPushed: function(){
             this.player.startFastForward();
         },
@@ -103,6 +106,9 @@ define(function(require, exports, module) {
         },
         rewReleased: function(){
             this.player.stopRewind();
+        },
+        pausePressed: function(){
+            this.player.pause();
         }
     });
 

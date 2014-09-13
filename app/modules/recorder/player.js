@@ -97,17 +97,6 @@ define(function(require, exports, module) {
                 }, 1);
             }
         },
-        stopPlayback: function(){
-            clearInterval(this.timer);
-            this.playHead = 0;
-            this.eventIdx = 0;
-            this.state = 'stop';
-            this.trigger('playbackProgress', 1,0);
-        },
-        pausePlayback: function(){
-            clearInterval(this.timer);
-            this.state = 'pause';
-        },
         startFastForward: function(){
             this.state = 'fwd';
             this.advancePlayer();
@@ -132,6 +121,17 @@ define(function(require, exports, module) {
             }else{
                 this.startPlayback(this.playHead, this.eventIdx);
             }
+        },
+        stop: function(){
+            clearInterval(this.timer);
+            this.playHead = 0;
+            this.eventIdx = 0;
+            this.state = 'stop';
+            this.trigger('playbackProgress', 1,0);
+        },
+        pause: function(){
+            clearInterval(this.timer);
+            this.state = 'pause';
         }
     };
 
