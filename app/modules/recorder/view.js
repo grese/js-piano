@@ -25,10 +25,16 @@ define(function(require, exports, module) {
             this.player.recorder = this.recorder;
             this.listenTo(this.player, 'playbackProgress', this.updatePlaybackProgress);
             this.listenTo(this.settings, 'change', this.render);
+            this.listenTo(this.song, 'change', this.render);
             this.on('createSong', this.createSong);
+        },
+        hasUnsavedChanges: function(){
+            return !this.listenMode &&
+                (this.recorder.events.length > 0 || this.song.get('name') !== 'Untitled');
         },
         serialize: function(){
             return {
+                saveDisabled: this.hasUnsavedChanges(),
                 song: this.song,
                 listenMode: this.settings.get('listenMode')
             };
@@ -48,7 +54,11 @@ define(function(require, exports, module) {
             "mousedown #recorder-ff-btn": 'fwdPushed',
             "mouseup #recorder-ff-btn": 'fwdReleased',
             "mousedown #recorder-rew-btn": 'rewPushed',
-            "mouseup #recorder-rew-btn": 'rewReleased'
+            "mouseup #recorder-rew-btn": 'rewReleased',
+            'change #song-name-input': 'songNameChanged'
+        },
+        songNameChanged: function(){
+            this.song.set('name', this.$songNameInput.val());
         },
         toggleRecording: function(){
             if(this.recorder.recording){
@@ -66,22 +76,20 @@ define(function(require, exports, module) {
             var percent = (current / total) * 100;
             this.$progressBar.css('width', percent+'%');
         },
-
         newSongPushed: function(){
-            if(this.recorder.events.length > 0 || this.song.get('name') !== 'untitled'){
-
+            if(this.hasUnsavedChanges()){
+                var mm = new ModalModel({
+                    title: 'Unsaved Changes',
+                    body: '<p>The recorder currently has unsaved changes.  If you choose to create ' +
+                        'a new song without saving, your changes will be lost.  Click \'Ok\' to continue, or ' +
+                        '\'Close\' to continue working on the current song.</p>',
+                    visible: true,
+                    actionTarget: this,
+                    okAction: 'createSong'
+                });
+                this.modal.model = mm;
+                this.modal.render();
             }
-            var mm = new ModalModel({
-                title: 'Unsaved Changes',
-                body: '<p>The recorder currently has unsaved changes.  If you choose to create ' +
-                    'a new song without saving, your changes will be lost.  Click \'Ok\' to continue, or ' +
-                    '\'Close\' to continue working on the current song.</p>',
-                visible: true,
-                actionTarget: this,
-                okAction: 'createSong'
-            });
-            this.modal.model = mm;
-            this.modal.render();
         },
         createSong: function(){
             this.modal.destroyModal();
