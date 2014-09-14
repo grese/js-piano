@@ -3,6 +3,7 @@ define(function(require, exports, module) {
     var app = require("app");
 
     var Song = Backbone.Model.extend({
+        idAttribute: '_id',
         defaults: {
             instrument: 'piano',
             name: 'Untitled',
@@ -11,7 +12,7 @@ define(function(require, exports, module) {
         },
         urlRoot: 'songs',
         url: function(){
-            return app.apiroot + this.urlRoot + '/' + this.name;
+            return app.apiroot + this.urlRoot;
         }
     });
 

@@ -6,7 +6,8 @@ require.config({
     "jquery": "../bower_components/jquery/dist/jquery",
     "backbone": "../bower_components/backbone/backbone",
     "layoutmanager": "../bower_components/layoutmanager/backbone.layoutmanager",
-    "bootstrap": "../bower_components/bootstrap/dist/js/bootstrap"
+    "bootstrap": "../bower_components/bootstrap/dist/js/bootstrap",
+    "moment": "../bower_components/moment/moment"
   },
     deps: ['main'],
     shim: {

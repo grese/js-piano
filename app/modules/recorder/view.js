@@ -51,6 +51,7 @@ define(function(require, exports, module) {
             "click #recorder-record-btn": 'toggleRecording',
             "click #recorder-stop-btn": 'stopPressed',
             "click #recorder-new-btn": 'newSongPushed',
+            "click #recorder-save-btn": 'savePushed',
             "mousedown #recorder-ff-btn": 'fwdPushed',
             "mouseup #recorder-ff-btn": 'fwdReleased',
             "mousedown #recorder-rew-btn": 'rewPushed',
@@ -75,6 +76,10 @@ define(function(require, exports, module) {
         updatePlaybackProgress: function(total, current){
             var percent = (current / total) * 100;
             this.$progressBar.css('width', percent+'%');
+        },
+        savePushed: function(){
+            console.log('SAVING SONG!');
+            this.song.save();
         },
         newSongPushed: function(){
             if(this.hasUnsavedChanges()){

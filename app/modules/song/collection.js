@@ -3,7 +3,11 @@ define(function(require, exports, module) {
     var app = require("app"),
         Song = require('./model');
     var Collection = Backbone.Collection.extend({
-            model: Song
+            model: Song,
+            urlRoot: 'songs',
+            url: function(){
+                return app.apiroot + this.urlRoot;
+            }
     });
     module.exports = Collection;
 });
