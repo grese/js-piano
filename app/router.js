@@ -23,7 +23,7 @@ define(function(require, exports, module) {
               self.songs = new Song.Collection(songs);
           });
           this.recorderSettings = new Recorder.SettingsModel();
-          this.modalView = new Modal.Views.Modal();
+          this.modal = new Modal.Views.Modal();
       },
       routes: {
         "": "index",
@@ -32,19 +32,17 @@ define(function(require, exports, module) {
 
     index: function(songid) {
         var song = null;
-        if(songid){
-            // Recorder will go into 'listen mode' if we are loading a previously recorded song...
-            song = this.songs.get(songid);
-            this.recorderSettings.set('listenMode', true);
-        }else{
+        if(songid) song = this.songs.get(songid);
+        if(!song){
             song = new Song.Model();
             this.recorderSettings.set('listenMode', false);
+        }else{
+            this.recorderSettings.set('listenMode', true);
         }
 
         this.recorderView = new Recorder.Views.Recorder({
             song: song,
-            settings: this.recorderSettings,
-            modal: this.modalView
+            settings: this.recorderSettings
         });
         this.pianoView = new Piano.Views.Piano();
 
@@ -57,7 +55,7 @@ define(function(require, exports, module) {
                 '.songs-container': this.songsView,
                 '.piano-container': this.pianoView,
                 '.recorder-container': this.recorderView,
-                '.modal-container': this.modalView
+                '.modal-container': this.modal
             },
             afterRender: function(){
                 $('.has-tooltip').tooltip();

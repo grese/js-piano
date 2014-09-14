@@ -6,6 +6,13 @@ define(function(require, exports, module) {
         duration: 0,
         events: [],
         recording: false,
+        reset: function(){
+            clearInterval(this.timer);
+            this.timer = null;
+            this.duration = 0;
+            this.events = [];
+            this.recording = false;
+        },
         recordEvent: function(sound, instrument){
             this.events.push({
                 instrument: instrument,
