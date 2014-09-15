@@ -29,10 +29,13 @@ define(function(require, exports, module) {
             this.on('createSong', this.createSong);
         },
         hasUnsavedChanges: function(){
-            return (this.recorder.events.length > 0 || this.song.get('name') !== 'Untitled');
+            return (this.recorder.events.length > 0 ||
+                this.recorder.duration > 0 ||
+                this.song.get('name') !== 'Untitled');
         },
         serialize: function(){
             return {
+                newDisabled: !this.settings.get('listenMode') && !this.hasUnsavedChanges(),
                 saveDisabled: this.hasUnsavedChanges(),
                 song: this.song,
                 listenMode: this.settings.get('listenMode')
@@ -65,6 +68,7 @@ define(function(require, exports, module) {
                 this.$recordBtn.removeClass('record-active');
                 this.recorder.stopRecording();
                 this.trigger('recordingOff');
+                this.render();
             }else{
                 this.$recordBtn.addClass('record-active');
                 this.recorder.startRecording();
