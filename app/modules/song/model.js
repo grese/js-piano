@@ -8,7 +8,8 @@ define(function(require, exports, module) {
             instrument: 'piano',
             name: 'Untitled',
             duration: 0,
-            events: []
+            events: [],
+            date: null
         },
         urlRoot: 'songs',
         url: function(){

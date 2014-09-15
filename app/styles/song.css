@@ -1,0 +1,6 @@
+.song-list .list-group-item{
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    border-color: #ececec;
+}

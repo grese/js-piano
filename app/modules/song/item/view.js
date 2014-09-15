@@ -6,13 +6,16 @@ define(function(require, exports, module) {
 
     var Layout = Backbone.Layout.extend({
         template: require("ldtpl!./template"),
-        tagName: "li",
+        tagName: "div",
         serialize: function() {
             return { model: this.model };
         },
         initialize: function() {
             this.listenTo(this.model, "change", this.render);
             this.on('goToSong', this.goToSong);
+        },
+        afterRender: function(){
+            this.$el.addClass('list-group-item');
         },
         events: {
             'click a.song-name': 'clickedSong'
