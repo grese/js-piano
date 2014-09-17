@@ -29,8 +29,7 @@ define(function(require, exports, module) {
             this.on('createSong', this.createSong);
         },
         hasUnsavedChanges: function(){
-            return (this.recorder.events.length > 0 ||
-                this.recorder.duration > 0 ||
+            return (this.recorder.hasRecordedData() ||
                 this.song.get('name') !== 'Untitled');
         },
         serialize: function(){
@@ -81,6 +80,12 @@ define(function(require, exports, module) {
             this.$progressBar.css('width', percent+'%');
         },
         savePushed: function(){
+            if(this.hasUnsavedChanges()){
+                this.song.set('events', this.recorder.events);
+                this.song.set('duration', this.recorder.duration);
+                this.song.set('date', moment().format());
+                console.log('SAVING SONG: ', this.song);
+            }
             this.song.save();
         },
         newSongPushed: function(){

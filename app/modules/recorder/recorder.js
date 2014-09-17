@@ -6,6 +6,9 @@ define(function(require, exports, module) {
         duration: 0,
         events: [],
         recording: false,
+        hasRecordedData: function(){
+            return this.duration > 0 || this.events.length > 0;
+        },
         reset: function(){
             clearInterval(this.timer);
             this.timer = null;
