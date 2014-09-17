@@ -16,40 +16,33 @@ define(function(require, exports, module) {
   // Defining the application router.
   var Router = Backbone.Router.extend({
       initialize: function(){
-          var s1 = new Song.Model({
-              name: 'herecomesthesun',
-              duration: '3:20',
-              events: []
+          var self = this;
+          this.songs = new Song.Collection();
+          this.songsView = new Song.Views.List({collection: this.songs});
+          this.songs.fetch().then(function(songs){
+              self.songs = new Song.Collection(songs);
           });
-          var s2 = new Song.Model({
-              name: 'LaLaLa',
-              duration: '3:33',
-              events: []
-          });
-          this.songs = new Song.Collection([s1, s2]);
           this.recorderSettings = new Recorder.SettingsModel();
-          this.modalView = new Modal.Views.Modal();
+          this.modal = new Modal.Views.Modal();
       },
       routes: {
         "": "index",
         ":songname": "index"
       },
 
-    index: function(songname) {
+    index: function(songid) {
         var song = null;
-        if(songname){
-            // Recorder will go into 'listen mode' if we are loading a previously recorded song...
-            song = this.songs.findWhere({name: songname});
-            this.recorderSettings.set('listenMode', true);
-        }else{
+        if(songid) song = this.songs.get(songid);
+        if(!song){
             song = new Song.Model();
             this.recorderSettings.set('listenMode', false);
+        }else{
+            this.recorderSettings.set('listenMode', true);
         }
 
         this.recorderView = new Recorder.Views.Recorder({
             song: song,
-            settings: this.recorderSettings,
-            modal: this.modalView
+            settings: this.recorderSettings
         });
         this.pianoView = new Piano.Views.Piano();
 
@@ -59,10 +52,10 @@ define(function(require, exports, module) {
             views: {
                 '.nav-container': new Nav.Views.Nav(),
                 '.footer-container': new Footer.Views.Footer(),
-                '.songs-container': new Song.Views.List({collection: this.songs}),
+                '.songs-container': this.songsView,
                 '.piano-container': this.pianoView,
                 '.recorder-container': this.recorderView,
-                '.modal-container': this.modalView
+                '.modal-container': this.modal
             },
             afterRender: function(){
                 $('.has-tooltip').tooltip();

@@ -48,7 +48,6 @@ define(function(require, exports, module) {
                 spriteJson = '/app/audio/'+instrument+'/output.json';
             // Get SpriteMap JSON for the selected instrument...
             $.getJSON(spriteJson).then(function(map){
-                console.log('loaded');
                 if(map.spritemap){
                     self.spritemap = map.spritemap;
                     self.audio = document.createElement('audio');
