@@ -1,6 +1,10 @@
-<span class="song-info">
-    <a href="/<%=model.get('name')%>" data-songname="<%=model.get('name')%>"
-       class="song-name"><%=model.get('name')%></a>
-    &nbsp;&nbsp;
-    <span class="song-duration pull-right"><%=model.get('duration')%></span>
-</span>
+<div class="row">
+    <div class="col-xs-5">
+        <a href="/<%=model.get('name')%>" data-songname="<%=model.id%>"
+           class="song-name"><%=model.get('name')%></a>
+    </div>
+    <div class="col-xs-5"></div>
+    <div class="col-xs-2">
+        <span class="song-duration"><%=model.get('duration')%></span>
+    </div>
+</div>

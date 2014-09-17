@@ -18,7 +18,8 @@ define(function(require, exports, module) {
             }, this);
         },
         initialize: function() {
-            this.listenTo(this.collection, "change", this.render);
+            this.listenTo(this.collection, "add", this.render);
+            this.listenTo(this.collection, "remove", this.render);
         }
     });
 

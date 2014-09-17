@@ -6,7 +6,7 @@ define(function(require, exports, module) {
         Recorder = require('./recorder'),
         Modal = require('../modal/index'),
         ModalModel = Modal.Model,
-        ModalView = Modal.Views.Modal;
+        SongModel = require('../song/model');
 
     var Layout = Backbone.Layout.extend({
         template: require("ldtpl!./template"),
@@ -29,11 +29,12 @@ define(function(require, exports, module) {
             this.on('createSong', this.createSong);
         },
         hasUnsavedChanges: function(){
-            return !this.listenMode &&
-                (this.recorder.events.length > 0 || this.song.get('name') !== 'Untitled');
+            return (this.recorder.hasRecordedData() ||
+                this.song.get('name') !== 'Untitled');
         },
         serialize: function(){
             return {
+                newDisabled: !this.settings.get('listenMode') && !this.hasUnsavedChanges(),
                 saveDisabled: this.hasUnsavedChanges(),
                 song: this.song,
                 listenMode: this.settings.get('listenMode')
@@ -51,6 +52,7 @@ define(function(require, exports, module) {
             "click #recorder-record-btn": 'toggleRecording',
             "click #recorder-stop-btn": 'stopPressed',
             "click #recorder-new-btn": 'newSongPushed',
+            "click #recorder-save-btn": 'savePushed',
             "mousedown #recorder-ff-btn": 'fwdPushed',
             "mouseup #recorder-ff-btn": 'fwdReleased',
             "mousedown #recorder-rew-btn": 'rewPushed',
@@ -65,6 +67,7 @@ define(function(require, exports, module) {
                 this.$recordBtn.removeClass('record-active');
                 this.recorder.stopRecording();
                 this.trigger('recordingOff');
+                this.render();
             }else{
                 this.$recordBtn.addClass('record-active');
                 this.recorder.startRecording();
@@ -76,8 +79,17 @@ define(function(require, exports, module) {
             var percent = (current / total) * 100;
             this.$progressBar.css('width', percent+'%');
         },
-        newSongPushed: function(){
+        savePushed: function(){
             if(this.hasUnsavedChanges()){
+                this.song.set('events', this.recorder.events);
+                this.song.set('duration', this.recorder.duration);
+                this.song.set('date', moment().format());
+                console.log('SAVING SONG: ', this.song);
+            }
+            this.song.save();
+        },
+        newSongPushed: function(){
+            if(!this.settings.get('listenMode') && this.hasUnsavedChanges()){
                 var mm = new ModalModel({
                     title: 'Unsaved Changes',
                     body: '<p>The recorder currently has unsaved changes.  If you choose to create ' +
@@ -87,13 +99,16 @@ define(function(require, exports, module) {
                     actionTarget: this,
                     okAction: 'createSong'
                 });
-                this.modal.model = mm;
-                this.modal.render();
+                app.router.modal.model = mm;
+                app.router.modal.render();
+            }else{
+                this.createSong();
             }
         },
         createSong: function(){
-            this.modal.destroyModal();
-            //this.song = new SongModel();
+            if(app.router.modal.model.get('visible')) app.router.modal.destroyModal();
+            this.recorder.reset();
+            this.song = app.router.song = new SongModel();
             this.render();
             Backbone.history.navigate('', {trigger: true});
         },
