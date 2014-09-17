@@ -4,4 +4,4 @@
 /test/coverage/
 
 # bbb Express server...
-!/node_modules/grunt-bbb-server/*
+!/node_modules/grunt-bbb-server
