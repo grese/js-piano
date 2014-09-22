@@ -1,0 +1,11 @@
+<button class="spinner-button <%=bootstrapType+' '+bootstrapSize+' '+buttonClass %>"
+        <% if(buttonId){ %> title='<%=buttonId%>' <% } %>
+        <% if(buttonTitle){ %> title='<%=buttonTitle%>' <% } %>
+        <% if(disabled){ %> disabled='disabled' <% } %> >
+        <% if(hasIcon){ %>
+            <span class="<%=buttonIcon%>"></span>
+        <% } %>
+        <% if(hasText){ %>
+            <%=buttonText%>
+        <% } %>
+</button>

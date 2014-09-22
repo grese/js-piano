@@ -1,7 +1,7 @@
 /*-- Bootstrap. -----------------------------------------*/
 
 @import "../../bower_components/bootstrap/dist/css/bootstrap.css";
-
+@import "../../bower_components/fontawesome/css/font-awesome.min.css";
 
 /*-- Application stylesheets. -----------------------------------------------*/
 @import "nav.css";

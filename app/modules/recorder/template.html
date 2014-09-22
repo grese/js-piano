@@ -8,14 +8,14 @@
             </div>
             <% if(!listenMode){ %>
                 <div class="col-xs-1">
-                    <div class='save-button-container'></div>
+                    <span class='save-button-container'></span>
                 </div>
             <% } %>
             <div class="col-xs-1">
                 <button id="recorder-new-btn" title="Create New Song"
                         class="btn btn-default btn-sm recorder-new-btn recorder-controls-btn has-tooltip"
                         <% if(newDisabled){ %> disabled="disabled" <% } %> >
-                    <span class="glyphicon glyphicon-plus"></span>
+                    <span class="fa fa-plus"></span>
                 </button>
             </div>
         </div>
@@ -27,20 +27,20 @@
                 <li>
                     <label class="recorder-button-label">Record</label><br/>
                     <button id="recorder-record-btn" class="btn btn-default btn-sm recorder-controls-btn">
-                        <span class="glyphicon glyphicon-record"></span>
+                        <span class="fa fa-circle"></span>
                     </button>
                 </li>
             <% } %>
             <li>
                 <label class="recorder-button-label">Play</label><br/>
                 <button id="recorder-play-btn" class="btn btn-default btn-sm recorder-controls-btn">
-                    <span class="glyphicon glyphicon-play"></span>
+                    <span class="fa fa-play"></span>
                 </button>
             </li>
             <li>
                 <label class="recorder-button-label">Pause</label><br/>
                 <button id="recorder-pause-btn" class="btn btn-default btn-sm recorder-controls-btn">
-                    <span class="glyphicon glyphicon-pause"></span>
+                    <span class="fa fa-pause"></span>
                 </button>
             </li>
             <li>
@@ -52,13 +52,13 @@
             <li>
                 <label class="recorder-button-label">Rew</label><br/>
                 <button id="recorder-rew-btn" class="btn btn-default btn-sm recorder-controls-btn">
-                    <span class="glyphicon glyphicon-backward"></span>
+                    <span class="fa fa-backward"></span>
                 </button>
             </li>
             <li>
                 <label class="recorder-button-label">FF</label><br/>
                 <button id="recorder-ff-btn" class="btn btn-default btn-sm recorder-controls-btn">
-                    <span class="glyphicon glyphicon-forward"></span>
+                    <span class="fa fa-forward"></span>
                 </button>
             </li>
         </ul>

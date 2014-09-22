@@ -37,7 +37,6 @@ define(function(require, exports, module) {
         serialize: function(){
             return {
                 newDisabled: !this.settings.get('listenMode') && !this.hasUnsavedChanges(),
-                saveDisabled: this.hasUnsavedChanges(),
                 song: this.song,
                 listenMode: this.settings.get('listenMode')
             };
@@ -47,10 +46,26 @@ define(function(require, exports, module) {
             this.$recordBtn = $('#recorder-record-btn');
             this.$progressBar = $('#recorder-progress-bar');
             this.$songNameInput = $('#song-name-input');
-            this.spinnerButton = new SpinnerButton({
-                el: this.$el.find('.button-here')
+            this.saveButton = new SpinnerButton({
+                el: this.$el.find('.save-button-container'),
+                hasText: false,
+                hasIcon: true,
+                buttonId: 'recorder-save-btn',
+                buttonTitle: 'Save Changes',
+                size: 'sm',
+                disabled: !this.hasUnsavedChanges(),
+                buttonClass: 'recorder-save-btn recorder-controls-btn has-tooltip',
+                buttonIcon: 'fa fa-save',
+                clickEvent: 'saveClicked'
             });
-            this.spinnerButton.render();
+            this.saveButton.render();
+            var self = this;
+
+            this.saveButton.on('saveClicked', function(){
+                self.saveButton.trigger('startSpinning');
+                self.render();
+                self.savePushed();
+            });
         },
         events: {
             "click #recorder-pause-btn": 'pausePressed',
@@ -58,7 +73,6 @@ define(function(require, exports, module) {
             "click #recorder-record-btn": 'toggleRecording',
             "click #recorder-stop-btn": 'stopPressed',
             "click #recorder-new-btn": 'newSongPushed',
-            "click #recorder-save-btn": 'savePushed',
             "mousedown #recorder-ff-btn": 'fwdPushed',
             "mouseup #recorder-ff-btn": 'fwdReleased',
             "mousedown #recorder-rew-btn": 'rewPushed',
@@ -91,7 +105,15 @@ define(function(require, exports, module) {
                 this.song.set('duration', this.recorder.duration);
                 this.song.set('date', moment().format());
             }
-            this.song.save();
+            var self = this;
+            this.song.save().then(function(result){
+                if(result.errors && result.errors.length > 0){
+
+                }else{
+
+                }
+                self.saveButton.trigger('stopSpinning');
+            });
         },
         newSongPushed: function(){
             if(!this.settings.get('listenMode') && this.hasUnsavedChanges()){
