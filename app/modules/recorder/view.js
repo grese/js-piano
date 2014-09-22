@@ -6,7 +6,8 @@ define(function(require, exports, module) {
         Recorder = require('./recorder'),
         Modal = require('../modal/index'),
         ModalModel = Modal.Model,
-        SongModel = require('../song/model');
+        SongModel = require('../song/model'),
+        SpinnerButton = require('../../components/spinner-button/index').Views.Default;
 
     var Layout = Backbone.Layout.extend({
         template: require("ldtpl!./template"),
@@ -27,6 +28,7 @@ define(function(require, exports, module) {
             this.listenTo(this.settings, 'change', this.render);
             this.listenTo(this.song, 'change', this.render);
             this.on('createSong', this.createSong);
+
         },
         hasUnsavedChanges: function(){
             return (this.recorder.hasRecordedData() ||
@@ -45,6 +47,10 @@ define(function(require, exports, module) {
             this.$recordBtn = $('#recorder-record-btn');
             this.$progressBar = $('#recorder-progress-bar');
             this.$songNameInput = $('#song-name-input');
+            this.spinnerButton = new SpinnerButton({
+                el: this.$el.find('.button-here')
+            });
+            this.spinnerButton.render();
         },
         events: {
             "click #recorder-pause-btn": 'pausePressed',
@@ -84,7 +90,6 @@ define(function(require, exports, module) {
                 this.song.set('events', this.recorder.events);
                 this.song.set('duration', this.recorder.duration);
                 this.song.set('date', moment().format());
-                console.log('SAVING SONG: ', this.song);
             }
             this.song.save();
         },
