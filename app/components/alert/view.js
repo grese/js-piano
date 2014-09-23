@@ -14,7 +14,7 @@ define(function(require, exports, module) {
                 dismissable = typeof options.dismissable !== 'undefined' ? options.dismissable : true,
                 autoDismiss = typeof options.autoDismiss !== 'undefined' ? options.autoDismiss : true,
                 active = typeof options.active !== 'undefined' ? options.active : true,
-                autoDismissDelay = typeof options.autoDismissDelay !== 'undefined' ? options.autoDismissDelay : 3000;
+                autoDismissDelay = typeof options.autoDismissDelay !== 'undefined' ? options.autoDismissDelay : 5000;
             this.type = type;
             this.alertIcon = alertIcon;
             this.alertMessage = alertMessage;
@@ -29,7 +29,7 @@ define(function(require, exports, module) {
             if(this.autoDismiss && this.$alert){
                 var self = this;
                 setTimeout(function(){
-                    //self.$alert.alert('close');
+                    self.$alert.alert('close');
                 }, this.autoDismissDelay);
             }
         },

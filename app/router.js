@@ -11,8 +11,7 @@ define(function(require, exports, module) {
       Piano = require('modules/piano/index'),
       Recorder = require('modules/recorder/index'),
       Modal = require('modules/modal/index'),
-      Alert = require('components/alert/index'),
-      AudioMap = require('audio/audiomap');
+      Alert = require('components/alert/index');
 
   // Defining the application router.
   var Router = Backbone.Router.extend({
@@ -70,7 +69,6 @@ define(function(require, exports, module) {
             },
             afterRender: function(){
                 $('.has-tooltip').tooltip();
-                self.alertContainer = this.$el.find('alert-container').eq(0);
             }
         });
         new Layout().render();

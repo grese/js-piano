@@ -16,6 +16,10 @@ hr.recorder-songname-divider{
     height: 8px;
     margin-bottom: 0;
 }
-.record-active{
+.record-active,
+.record-active:hover,
+.record-active:active,
+.record-active:focus,
+.record-active:visited{
     color: #bb0000;
 }

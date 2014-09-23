@@ -28,7 +28,9 @@ define(function(require, exports, module) {
             this.listenTo(this.settings, 'change', this.render);
             this.listenTo(this.song, 'change', this.render);
             this.on('createSong', this.createSong);
-
+            this.on('saveSong', this.saveSong);
+            this.on('recordingOn', this.render);
+            this.on('recordingOff', this.render);
         },
         hasUnsavedChanges: function(){
             return (this.recorder.hasRecordedData() ||
@@ -37,6 +39,7 @@ define(function(require, exports, module) {
         saveInProgress: false,
         serialize: function(){
             return {
+                recordingClass: this.recorder.recording ? 'record-active' : '',
                 newDisabled: !this.settings.get('listenMode') && !this.hasUnsavedChanges(),
                 song: this.song,
                 listenMode: this.settings.get('listenMode')
@@ -63,8 +66,6 @@ define(function(require, exports, module) {
             this.saveButton.render();
             var self = this;
             this.saveButton.on('saveClicked', function(){
-                self.saveInProgress = true;
-                self.saveButton.trigger('startSpinning');
                 self.savePushed();
             });
         },
@@ -85,27 +86,22 @@ define(function(require, exports, module) {
         },
         toggleRecording: function(){
             if(this.recorder.recording){
-                this.$recordBtn.removeClass('record-active');
                 this.recorder.stopRecording();
                 this.trigger('recordingOff');
-                this.render();
             }else{
-                this.$recordBtn.addClass('record-active');
                 this.recorder.startRecording();
                 this.trigger('recordingOn');
             }
-            this.$recordBtn.focusout();
         },
         updatePlaybackProgress: function(total, current){
             var percent = (current / total) * 100;
             this.$progressBar.css('width', percent+'%');
         },
-        savePushed: function(){
-            if(this.hasUnsavedChanges()){
-                this.song.set('events', this.recorder.events);
-                this.song.set('duration', this.recorder.duration);
-                this.song.set('date', moment().format());
-            }
+        saveSong: function(){
+            this.saveInProgress = true;
+            this.saveButton.trigger('startSpinning');
+            if(app.router.modal.model.get('visible')) app.router.modal.destroyModal();
+
             var self = this;
             this.song.save().then(function(result){
                 if(result.errors && result.errors.length > 0){
@@ -134,6 +130,25 @@ define(function(require, exports, module) {
                 self.saveButton.trigger('stopSpinning');
             });
         },
+        savePushed: function(){
+            if(this.hasUnsavedChanges()){
+                this.song.set('events', this.recorder.events);
+                this.song.set('duration', this.recorder.duration);
+                this.song.set('date', moment().format());
+                var mm = new ModalModel({
+                    title: 'Save?',
+                    body: '<p>You are about to save the song that you have been working on.  ' +
+                        'Once you save this song, you will not be able to go back and edit it.  ' +
+                        'Are you sure you are ready to save?</p>',
+                    visible: true,
+                    actionTarget: this,
+                    okAction: 'saveSong'
+                });
+                app.router.modal.model = mm;
+                app.router.modal.render();
+            }
+        },
+
         newSongPushed: function(){
             if(!this.settings.get('listenMode') && this.hasUnsavedChanges()){
                 var mm = new ModalModel({
