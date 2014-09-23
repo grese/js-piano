@@ -11,7 +11,7 @@ define(function(require, exports, module) {
     			buttonIcon = typeof options.buttonIcon !== 'undefined' ? options.buttonIcon : false,
     			buttonText = typeof options.buttonText !== 'undefined' ? options.buttonText : 'Click',
     			buttonClass = typeof options.buttonClass !== 'undefined' ? options.buttonClass : 'btn btn-default',
-    			spinnerIcon = typeof options.spinnerIcon !== 'undefined' ? options.spinnerIcon : 'fa fa-spinner fa-spin fa-lg',
+    			spinnerIcon = typeof options.spinnerIcon !== 'undefined' ? options.spinnerIcon : 'fa fa-spinner fa-spin',
     			hasText = typeof options.hasText !== 'undefined' ? options.hasText : true,
     			hasIcon = typeof options.hasIcon !== 'undefined' ? options.hasIcon : false,
     			buttonId = typeof options.buttonId !== 'undefined' ? options.buttonId : null,
@@ -49,9 +49,6 @@ define(function(require, exports, module) {
             if(this.clickEvent !== null){
                 this.trigger(this.clickEvent);
             }
-        },
-        afterRender: function(){
-            this.$button = this.$el.find('.spinner-button').eq(0);
         },
         getClassForType: function(type){
             switch(type){

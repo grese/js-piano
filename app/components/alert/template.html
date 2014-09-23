@@ -1,0 +1,9 @@
+<% if(active){ %>
+<div class="alert <%=alertClass%> <%=dismissableClass%>" role="alert">
+    <% if(dismissable) { %>
+    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    <% } %>
+    <span class="<%=alertIcon%>"></span>
+    <strong><%=alertTitle%></strong> <%=alertMessage%>
+</div>
+<% } %>

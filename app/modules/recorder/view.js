@@ -34,6 +34,7 @@ define(function(require, exports, module) {
             return (this.recorder.hasRecordedData() ||
                 this.song.get('name') !== 'Untitled');
         },
+        saveInProgress: false,
         serialize: function(){
             return {
                 newDisabled: !this.settings.get('listenMode') && !this.hasUnsavedChanges(),
@@ -50,6 +51,7 @@ define(function(require, exports, module) {
                 el: this.$el.find('.save-button-container'),
                 hasText: false,
                 hasIcon: true,
+                spinning: this.saveInProgress,
                 buttonId: 'recorder-save-btn',
                 buttonTitle: 'Save Changes',
                 size: 'sm',
@@ -60,10 +62,9 @@ define(function(require, exports, module) {
             });
             this.saveButton.render();
             var self = this;
-
             this.saveButton.on('saveClicked', function(){
+                self.saveInProgress = true;
                 self.saveButton.trigger('startSpinning');
-                self.render();
                 self.savePushed();
             });
         },
@@ -108,10 +109,28 @@ define(function(require, exports, module) {
             var self = this;
             this.song.save().then(function(result){
                 if(result.errors && result.errors.length > 0){
-
+                    var serverErrs = '<ul><li>' + result.errors.join('</li><li>') + '</li></ul>';
+                    app.router.renderAlert({
+                        type: 'danger',
+                        alertTitle: 'Oops! ',
+                        alertMessage: ' A problem occurred while saving your song to the server. '+serverErrs
+                    });
                 }else{
-
+                    app.router.renderAlert({
+                        type: 'success',
+                        alertTitle: 'Success! ',
+                        alertMessage: ' Your song was saved successfully!'
+                    });
+                    app.router.songs.fetch().then(function(){
+                        if(result.song){
+                            var id = result.song._id;
+                            if(id){
+                                app.router.navigate('/'+id, {trigger: true});
+                            }
+                        }
+                    });
                 }
+                self.saveInProgress = false;
                 self.saveButton.trigger('stopSpinning');
             });
         },

@@ -2,8 +2,11 @@
         <% if(buttonId){ %> title='<%=buttonId%>' <% } %>
         <% if(buttonTitle){ %> title='<%=buttonTitle%>' <% } %>
         <% if(disabled){ %> disabled='disabled' <% } %> >
-        <% if(hasIcon){ %>
+        <% if(hasIcon && !spinning){ %>
             <span class="<%=buttonIcon%>"></span>
+        <% } %>
+        <% if(spinning){ %>
+            <span class="<%=spinnerIcon%>"></span>
         <% } %>
         <% if(hasText){ %>
             <%=buttonText%>
