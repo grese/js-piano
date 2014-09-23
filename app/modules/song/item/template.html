@@ -3,8 +3,14 @@
         <a href="/<%=model.get('name')%>" data-songname="<%=model.id%>"
            class="song-name"><%=model.get('name')%></a>
     </div>
-    <div class="col-xs-5"></div>
-    <div class="col-xs-2">
-        <span class="song-duration"><%=model.get('duration')%></span>
+    <div class="col-xs-4"></div>
+    <div class="song-duration-column col-xs-2">
+        <span class="song-duration"><%=duration%></span>
+    </div>
+    <div class="song-download-column col-xs-1">
+        <a class="btn btn-link song-download-button"
+           href="<%=songFile%>" download="<%=downloadFile%>">
+            <span class="fa fa-download"></span>
+        </a>
     </div>
 </div>

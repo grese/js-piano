@@ -4,3 +4,16 @@
     border-right: none;
     border-color: #ececec;
 }
+.song-download-button{
+    padding: 0;
+}
+.song-duration-column{
+   text-align: right;
+}
+@media (max-width: 767px) {
+    .songs-container{
+        margin-top: 40px;
+        padding-top: 25px;
+        border-top: 1px solid #ddd;
+    }
+}
