@@ -11,8 +11,9 @@ A JavaScript piano & recording console.
 4. Install git (sudo apt-get install git)
 5. Install Grunt & Bower:  sudo npm install -g grunt-cli bower
 6. Install FFMPeg (sudo apt-add-repository ppa:jon-severinsson/ffmpeg; sudo apt-get update; sudo apt-get install ffmpeg;)
-7. Checkout Project from Git:  git clone [this repo]
-8. cd js-piano
-9. npm install
-10. bower install
-11. grunt server
+8. Install MongoDB (sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10; echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list; sudo apt-get update; sudo apt-get install -y mongodb-org; )
+9. Checkout Project from Git:  git clone [this repo]
+10. cd js-piano
+11. npm install
+12. bower install
+13. grunt server
