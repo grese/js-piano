@@ -18,4 +18,4 @@ A JavaScript piano & recording console.
 12. bower install
 13. Update build/tasks/server.coffee to use port 8080 instead of 8000. 
 14. Forward port 8080 to 80 (sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to 8080)
-15. grunt server
+15. grunt default server:release
