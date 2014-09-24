@@ -3,3 +3,4 @@
 /bower_components/
 /test/coverage/
 !/node_modules/grunt-bbb-server
+/app/audio/songs/*
