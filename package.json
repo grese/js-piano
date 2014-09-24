@@ -2,7 +2,8 @@
   "name": "JSPiano",
   "version": "1.0.0",
     "dependencies": {
-        "fluent-ffmpeg": "~2.0.0-rc2"
+        "fluent-ffmpeg": "~2.0.0-rc2",
+        "grunt-bbb-server": "~0.1.0-alpha.13"
     },
   "devDependencies": {
     "grunt": "~0.4.5",
@@ -15,7 +16,6 @@
     "grunt-karma": "~0.8.3",
     "grunt-karma-coveralls": "~2.5.1",
     "grunt-bbb-styles": "~0.1.0-alpha.5",
-    "grunt-bbb-server": "~0.1.0-alpha.13",
     "karma-jasmine": "~0.2.2",
     "karma-mocha": "~0.1.4",
     "karma-qunit": "~0.1.3",

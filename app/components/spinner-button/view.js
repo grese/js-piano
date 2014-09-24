@@ -71,8 +71,6 @@ define(function(require, exports, module) {
                 case 'large':
                 case 'lg':
                     return 'btn-lg';
-                case 'medium':
-                case 'md':
                 default:
                     return '';
             }

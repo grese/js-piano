@@ -28,6 +28,7 @@ define(function(require, exports, module) {
         },
         afterRender: function(){
             this.$el.addClass('list-group-item');
+            this.$el.find('.has-tooltip').tooltip();
         },
         events: {
             'click a.song-name': 'clickedSong'
